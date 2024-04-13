@@ -114,8 +114,8 @@ class PrizeSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                'title' => "ZONK",
-                'value' => 0,
+                'title' => "Rp.5,000",
+                'value' => 5000,
                 'first_prob' => '0',
                 'second_prob' => '45',
                 'cat_id' => '1',

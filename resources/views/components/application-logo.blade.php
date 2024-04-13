@@ -2,4 +2,4 @@
     'class' => '',
 ])
 
-<img src="{{ asset('/assets/img/logo.webp') }}" class="{{$class}}" alt="Example Image">
+<img src="{{ asset('/assets/img/logo.gif') }}" class="{{$class}}" alt="Example Image">

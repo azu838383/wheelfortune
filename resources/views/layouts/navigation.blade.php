@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center py-2">
                     <a href="{{ route('reward.index') }}" class="block">
-                        <x-application-logo class="w-[300px]" />
+                        <x-application-logo class="h-[80px]" />
                     </a>
                 </div>
 

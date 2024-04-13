@@ -6,11 +6,12 @@
     text-align: right;
     border-radius: 50%;
     line-height: 0;
-    color: #fff;
+    color: #333;
     z-index: 1;
     left: 50%;
     top: 50%;
-    right: 75px;
+    right: 105px;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
     transform-origin: 0 0;
     transform: translateX(-50%) translateY(-50%) rotate(0deg);
 }
@@ -23,7 +24,7 @@
     height: 100vh;
 }
 .wheel-size {
-    width: 485px;
+    width: 620px;
 }
 .scale-wheel {
     transform: scale(0.8);
@@ -47,18 +48,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 @media only screen and (max-width: 768px) {
     .wheel-size {
-        width: 340px !important;
+        width: 540px !important;
     }
     .prize-wheel-slice {
         position: absolute;
         text-align: right;
         border-radius: 50%;
         line-height: 0;
-        color: #fff;
+        color: #333;
         z-index: 1;
         left: 50%;
         top: 50%;
-        right: 50px;
+        right: 65px;
         font-size: 12px;
         transform-origin: 0 0;
         transform: translateX(-50%) translateY(-50%) rotate(0deg);
@@ -66,22 +67,22 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 @media only screen and (max-width: 430px) {
     .wheel-size {
-        width: 360px !important;
+        width: 560px !important;
     }
 }
 @media only screen and (max-width: 414px) {
     .wheel-size {
-        width: 340px !important;
+        width: 540px !important;
     }
 }
 @media only screen and (max-width: 390px) {
     .wheel-size {
-        width: 320px !important;
+        width: 520px !important;
     }
 }
 @media only screen and (max-width: 375px) {
     .wheel-size {
-        width: 310px !important;
+        width: 510px !important;
     }
 }
 @media only screen and (max-height: 667px) {
