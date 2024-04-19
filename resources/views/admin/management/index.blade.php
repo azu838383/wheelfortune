@@ -4,7 +4,7 @@
             <h3 class="!text-lg pr-3 whitespace-nowrap text-white mb-2">Admin Log Activity</h3>
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    
+
                     <x-bladewind.table divider="thin" compact="true" search_placeholder="Find data..." class_search="w-1/3">
                         <x-slot name="header" class="text-center">
                             <th class="!text-center">admin username</th>
@@ -19,7 +19,8 @@
                                 <td>{{ $data->act_on }}</td>
                                 <td>{{ $data->activity }}</td>
                                 <td class="text-left w-[500px]">{{ $data->detail }}</td>
-                                <td class="w-[120px]">{{ $data->created_at ? $data->created_at->timezone('Asia/Jakarta') : '' }}</td>
+                                <td class="w-[120px]">
+                                    {{ $data->created_at ? $data->created_at->timezone('Asia/Jakarta') : '' }}</td>
                             </tr>
                         @endforeach
                     </x-bladewind.table>
@@ -41,35 +42,34 @@
             <x-bladewind.button size="small" type="primary" onclick="window.location='{{ route('register') }}'">
                 Register New Admin
             </x-bladewind.button>
-            <x-bladewind.table divider="thin" compact="true"
-                        class_search="w-1/3">
-                        <x-slot name="header" class="text-center">
-                            <th class="!text-center">id</th>
-                            <th class="!text-center">name</th>
-                            <th class="!text-center">username</th>
-                            <th class="!text-center">email</th>
-                            <th class="!text-center">level</th>
-                            <th class="!text-center">action</th>
-                        </x-slot>
-                        @foreach ($users as $data)
-                            <tr class="text-center">
-                                <td>{{ $data->id }}</td>
-                                <td>{{ $data->name }}</td>
-                                <td>{{ $data->username }}</td>
-                                <td>{{ $data->email }}</td>
-                                <td>{{ $data->level === 10 ? 'Super Admin' : 'Admin' }}</td>
-                                <td>
-                                    <div class="flex justify-center gap-2">
-                                        <x-bladewind::button.circle size="tiny" icon="pencil" tooltip="Edit"
-                                            onclick="editUser({{ $data }})" />
-                                        <x-bladewind::button.circle size="tiny" icon="trash" color="red"
-                                            tooltip="Delete" onclick="deleteUser({{ $data->id }})" />
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </x-bladewind.table>
-            
+            <x-bladewind.table divider="thin" compact="true" class_search="w-1/3">
+                <x-slot name="header" class="text-center">
+                    <th class="!text-center">id</th>
+                    <th class="!text-center">name</th>
+                    <th class="!text-center">username</th>
+                    <th class="!text-center">email</th>
+                    <th class="!text-center">level</th>
+                    <th class="!text-center">action</th>
+                </x-slot>
+                @foreach ($users as $data)
+                    <tr class="text-center">
+                        <td>{{ $data->id }}</td>
+                        <td>{{ $data->name }}</td>
+                        <td>{{ $data->username }}</td>
+                        <td>{{ $data->email }}</td>
+                        <td>{{ $data->level === 10 ? 'Super Admin' : 'Admin' }}</td>
+                        <td>
+                            <div class="flex justify-center gap-2">
+                                <x-bladewind.button.circle class="w-8 h-8 !p-0" size="tiny" icon="pencil"
+                                    tooltip="Edit" onclick="editUser({{ $data }})" />
+                                <x-bladewind::button.circle class="w-8 h-8 !p-0" size="tiny" icon="trash" color="red"
+                                    tooltip="Delete" onclick="deleteUser({{ $data->id }})" />
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </x-bladewind.table>
+
         </div>
     </x-collapse>
 </x-app-layout>
@@ -163,6 +163,7 @@
             <option value="1">Admin</option>
         </select>
 
-        <x-bladewind.input type="password" name="password" label="Password" error_message="Please enter new password"/>
+        <x-bladewind.input type="password" name="password" label="Password"
+            error_message="Please enter new password" />
     </form>
 </x-bladewind::modal>

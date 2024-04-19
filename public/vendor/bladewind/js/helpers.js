@@ -31,7 +31,7 @@ var validateForm = (form) => {
                 let error_message = el.getAttribute('data-error-message');
                 let show_error_inline = el.getAttribute('data-error-inline');
                 let error_heading = el.getAttribute('data-error-heading');
-                
+
                 (el_parent !== null) ?
                     changeCss(`.${el_parent} .clickable`, '!border-error-400') :
                     changeCss(el, '!border-error-400', 'add', true);
@@ -125,20 +125,17 @@ var changeCssForDomArray = (elements, css, mode = 'add') => {
 
 var changeCss = (element, css, mode = 'add', elementIsDomObject = false) => {
     // css can be comma separated
-    // if elementIsDomObject don't run it through dom_el
-    if ((!elementIsDomObject && dom_el(element) != null) || (elementIsDomObject && element != null)) {
+    // if !elementIsDomObject run it through dom_el
+    if (!elementIsDomObject) element = dom_el(element);
+    if (element) {
         if (css.indexOf(',') !== -1 || css.indexOf(' ') !== -1) {
             css = css.replace(/\s+/g, '').split(',');
             for (let classname of css) {
-                (mode === 'add') ?
-                    ((elementIsDomObject) ? element.classList.add(classname.trim()) : dom_el(element).classList.add(classname.trim())) :
-                    ((elementIsDomObject) ? element.classList.remove(classname.trim()) : dom_el(element).classList.remove(classname.trim()));
+                (mode === 'add') ? element.classList.add(classname.trim()) : element.classList.remove(classname.trim());
             }
         } else {
-            if ((!elementIsDomObject && dom_el(element).classList !== undefined) || (elementIsDomObject && element.classList !== undefined)) {
-                (mode === 'add') ?
-                    ((elementIsDomObject) ? element.classList.add(css) : dom_el(element).classList.add(css)) :
-                    ((elementIsDomObject) ? element.classList.remove(css) : dom_el(element).classList.remove(css));
+            if (element.classList !== undefined) {
+                (mode === 'add') ? element.classList.add(css) : element.classList.remove(css);
             }
         }
     }
@@ -236,20 +233,11 @@ var goToTab = (el, color, context) => {
         alert('no matching x-bladewind.tab-content div found for this tab');
         return false;
     }
-    changeCssForDomArray(
-        `.${context}-headings li.atab span`,
-        `text-${color}-500,border-${color}-500,hover:text-${color}-500,hover:border-${color}-500`,
-        'remove');
-    changeCssForDomArray(
-        `.${context}-headings li.atab span`,
-        'text-gray-500,border-transparent,hover:text-gray-600,hover:border-gray-300');
-    changeCss(
-        `.atab-${el} span`,
-        'text-gray-500,border-transparent,hover:text-gray-600,hover:border-gray-300', 'remove');
-    changeCss(
-        `.atab-${el} span`,
-        `text-${color}-500,border-${color}-500,hover:text-${color}-500,hover:border-${color}-500`);
 
+    changeCssForDomArray(`.${context}-headings li.atab span`, `${color}, is-active`, 'remove');
+    changeCssForDomArray(`.${context}-headings li.atab span`, 'is-inactive');
+    changeCss(`.atab-${el} span`, 'is-inactive', 'remove');
+    changeCss(`.atab-${el} span`, `is-active, ${color}`);
     dom_els(`.${context_}-tab-contents div.atab-content`).forEach((el) => {
         hide(el, true);
     });
@@ -322,15 +310,15 @@ var selectTag = (value, name) => {
         changeCss(tag, css.match(/bg-[\w]+-500/)[0], 'remove', true);
         changeCss(tag, (css.match(/bg-[\w]+-500/)[0]).replace('500', '200'), 'add', true);
         changeCss(tag, css.match(/text-[\w]+-50/)[0], 'remove', true);
-        changeCss(tag, (css.match(/text-[\w]+-50/)[0]).replace('50', '500'), 'add', true);
+        changeCss(tag, (css.match(/text-[\w]+-50/)[0]).replace('50', '700'), 'add', true);
     } else { // add
         let total_selected = (input.value === '') ? 0 : input.value.split(',').length;
         if (total_selected < max_selection) {
             input.value += `,${value}`;
             changeCss(tag, css.match(/bg-[\w]+-200/)[0], 'remove', true);
             changeCss(tag, (css.match(/bg-[\w]+-200/)[0]).replace('200', '500'), 'add', true);
-            changeCss(tag, css.match(/text-[\w]+-500/)[0], 'remove', true);
-            changeCss(tag, (css.match(/text-[\w]+-500/)[0]).replace('500', '50'), 'add', true);
+            changeCss(tag, css.match(/text-[\w]+-700/)[0], 'remove', true);
+            changeCss(tag, (css.match(/text-[\w]+-700/)[0]).replace('700', '50'), 'add', true);
         } else {
             showNotification(input.getAttribute('data-error-heading'), input.getAttribute('data-error-message'), 'error');
         }
@@ -391,4 +379,48 @@ var trapFocusInModal = (event) => {
             }
         }
     }
+}
+
+var checkMinMax = (min, max, el) => {
+    let field = dom_el(`.${el}`);
+    let minimum = parseInt(min);
+    let maximum = parseInt(max);
+    let error_message = field.getAttribute('data-error-message');
+    let show_error_inline = field.getAttribute('data-error-inline');
+    let error_heading = field.getAttribute('data-error-heading');
+
+    if (field.value !== '' && ((!isNaN(minimum) && field.value < minimum) || (!isNaN(maximum) && field.value > maximum))) {
+        changeCss(field, '!border-error-400', 'add', true);
+        if (error_message) {
+            (show_error_inline) ? unhide(`.${el_name}-inline-error`) :
+                showNotification(error_heading, error_message, 'error');
+        }
+    } else {
+        if (error_message) hide(`.${el_name}-inline-error`);
+        changeCss(field, '!border-error-400', 'remove', true);
+    }
+}
+
+var makeClearable = (el) => {
+    let field = dom_el(`.${el}`);
+    let suffix_element = dom_el(`.${el}-suffix svg`);
+    let table_element = el.replace('bw_search_', 'table.').replace('_', '-');
+    let clearing_function = (dom_el(table_element)) ? ` filterTable('',\'${table_element}\')` : '';
+    if (!suffix_element.getAttribute('onclick')) {
+        suffix_element.setAttribute('onclick', `dom_el(\'.${el}\').value=''; hide(this, true); ${clearing_function}`);
+    }
+    (field.value !== '') ? unhide(suffix_element, true) : hide(suffix_element, true);
+}
+
+var convertToBase64 = (file, el) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+        const base64String = reader.result;//.replace('data:', '').replace(/^.+,/, '');
+        dom_el(el).value = base64String;
+    };
+    reader.readAsDataURL(file);
+}
+
+var allowedFileSize = (file_size, max_size) => {
+    return (file_size <= ((max_size) * 1) * 1000000);
 }

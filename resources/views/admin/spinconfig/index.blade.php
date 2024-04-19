@@ -25,8 +25,8 @@
                                 <td>{{ $data->updated_at ? $data->updated_at->timezone('Asia/Jakarta') : '' }}</td>
                                 <td>
                                     <div class="flex justify-center gap-2">
-                                        <x-bladewind::button.circle size="tiny" icon="pencil" tooltip="Edit"
-                                            onclick="editDataPrize({{ $data }})" />
+                                        <x-bladewind.button.circle class="w-8 h-8 !p-0" size="tiny" icon="pencil"
+                                            tooltip="Edit" onclick="editDataPrize({{ $data }})" />
                                     </div>
                                 </td>
                             </tr>
@@ -56,8 +56,8 @@
                         <td>{{ $data->unit }}</td>
                         <td>
                             <div class="flex justify-center gap-2">
-                                <x-bladewind::button.circle size="tiny" icon="pencil" tooltip="Edit"
-                                    onclick="editDataCatPrize({{ $data }})" />
+                                <x-bladewind.button.circle class="w-8 h-8 !p-0" size="tiny" icon="pencil"
+                                    tooltip="Edit" onclick="editDataCatPrize({{ $data }})" />
                             </div>
                         </td>
                     </tr>

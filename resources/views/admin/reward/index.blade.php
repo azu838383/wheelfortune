@@ -59,12 +59,12 @@
                         </x-slot>
                         @foreach ($rewards as $data)
                             <tr class="text-center">
-                                <td>{{ $data->userVoucher->username }}</td>
+                                <td>{{ $data->userVoucher ? $data->userVoucher->username : 'Unknown' }}</td>
                                 <td>{{ $data->Platform ? $data->Platform->name : '' }}</td>
                                 {{-- <td>{{ $data->realPrize->title }}</td> --}}
                                 <td>{{ $data->prize_title }}</td>
                                 <td>Rp.{{ number_format($data->prize_value) }}</td>
-                                <td>{{ $data->userVoucher->code_voucher }}</td>
+                                <td>{{ $data->userVoucher ? $data->userVoucher->code_voucher : 'Unknown' }}</td>
                                 <td>
                                     @if ($data->prize_value === 0)
                                         <div class="flex flex-col justify-center items-center">
