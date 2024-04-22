@@ -2,12 +2,12 @@
     <div
         class="min-h-screen w-screen md:w-auto overflow-hidden items-center text-black dark:text-white justify-around flex flex-col md:grid md:grid-cols-2">
         <div class="relative w-full h-fit scale-wheel top-48 md:top-0">
-            <img src="{{ asset('/assets/img/frame.webp') }}" alt="frame"
+            <img src="{{ asset('/assets/img/frame.webp') }}?v=1" alt="frame"
                 class="absolute right-0 left-0 top-0 bottom-0 m-auto z-50">
 
             {{-- this wheel must be rotate with items prize --}}
             <div id="wheel-rotate" class="w-full h-full absolute right-0 left-0 top-1 bottom-0 m-auto -rotate-[108deg]">
-                <img src="{{ asset('/assets/img/wheel.webp') }}" alt="wheel"
+                <img src="{{ asset('/assets/img/wheel.webp') }}?v=1" alt="wheel"
                     class="absolute right-0 left-0 top-0 bottom-0 m-auto wheel-size">
                 <div class="absolute right-0 left-0 top-0 bottom-0 m-auto">
                     @foreach ($list_prize as $data_prize)
