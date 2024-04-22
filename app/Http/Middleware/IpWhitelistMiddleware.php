@@ -23,9 +23,9 @@ class IpWhitelistMiddleware
         $list_ip = explode(',', $whitelistedIp->value);
 
 
-        if (!in_array($ip_address, $list_ip)) {
-            return redirect('/')->with('warning', 'Access Denied: Your IP address is not authorized to access this resource.');
-        }
+        // if (!in_array($ip_address, $list_ip)) {
+        //     return redirect('/')->with('warning', 'Access Denied: Your IP address is not authorized to access this resource.');
+        // }
 
         return $next($request);
     }
