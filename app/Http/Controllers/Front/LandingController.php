@@ -16,7 +16,7 @@ class LandingController extends Controller
 {
     public function index(Request $request)
     {
-        dd($request->getClientIp());
+        // dd($request->getClientIp());
         $text_win = Setting::where('set_for', 'win_text')->first();
         $text_lose = Setting::where('set_for', 'lose_text')->first();
         $guide = Setting::where('set_for', 'guide_text')->first();
