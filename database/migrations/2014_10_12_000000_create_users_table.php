@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('username', 191)->unique();
-            $table->string('email')->unique();
+            $table->string('email', 191)->unique();
             $table->string('password');
             $table->integer('level')->default(1);
             $table->timestamp('email_verified_at')->nullable();
